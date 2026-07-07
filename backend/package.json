@@ -1,0 +1,31 @@
+{
+  "name": "employee-self-evaluation-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Thin AI-proxy backend for the Employee Self-Evaluation Tool",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --watch src --ext ts --exec \"node --import tsx/esm src/index.ts\"",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.665.0",
+    "cors": "^2.8.5",
+    "express": "^5.0.0",
+    "openai": "^4.65.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.6.1",
+    "nodemon": "^3.1.7",
+    "tsx": "^4.19.1",
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.1"
+  }
+}

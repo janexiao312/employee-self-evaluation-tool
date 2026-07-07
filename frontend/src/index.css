@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #0f172a;
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-white text-slate-900 font-sans;
+  }
+
+  /* Focus ring utility for accessibility */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-500;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm
+           hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600
+           disabled:cursor-not-allowed disabled:opacity-50 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm
+           hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600
+           disabled:cursor-not-allowed disabled:opacity-50 transition-colors;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-slate-600
+           hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600
+           disabled:cursor-not-allowed disabled:opacity-50 transition-colors;
+  }
+
+  .card {
+    @apply rounded-lg border border-slate-200 bg-white shadow-sm p-6;
+  }
+
+  .char-counter-normal {
+    @apply text-xs text-slate-500;
+  }
+
+  .char-counter-limit {
+    @apply text-xs text-red-600 font-medium;
+  }
+}
