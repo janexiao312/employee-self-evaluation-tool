@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Self-Evaluation Tool Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-brand-blue-500: #0c62fb;
+      --color-brand-blue-600: #0a4ec9;
+      --color-brand-blue-300: #6da1fd;
+      --color-brand-navy-900: #000a25;
+      --color-brand-navy-800: #0f1c41;
+      --color-brand-navy-700: #002faf;
+      --color-accent-lime-500: #deff4d;
+      --color-accent-lime-600: #abd904;
+      --color-accent-cyan-500: #1be1f2;
+      --color-accent-lilac-500: #c7b9ff;
+      --color-accent-coral-500: #ff4d5f;
+      --color-accent-coral-300: #ff7987;
+      --color-text-primary: #292929;
+      --color-text-muted: #707070;
+      --color-border-subtle: #d6d6d6;
+      --color-surface-muted: #f5f5f5;
+      --color-surface-base: #ffffff;
+      --shadow-sm: 0 2px 8px rgba(0, 10, 37, 0.06);
+      --shadow-md: 0 12px 36px rgba(0, 10, 37, 0.1);
+      --shadow-lg: 0 24px 64px rgba(0, 10, 37, 0.14);
+      --radius-sm: 0.5rem;
+      --radius-md: 0.875rem;
+      --radius-lg: 1.25rem;
+      --radius-xl: 1.75rem;
+      --font-family-sans: "Slalom Sans", "Noto Sans", sans-serif;
+      --font-family-serif: "Lora", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-family-sans);
+      color: var(--color-text-primary);
+      background:
+        radial-gradient(circle at top left, rgba(27, 225, 242, 0.14), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(199, 185, 255, 0.18), transparent 20%),
+        linear-gradient(180deg, #eef4ff 0%, #f8fbff 24%, #ffffff 100%);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(12, 98, 251, 0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.38), transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(0, 10, 37, 0.96), rgba(15, 28, 65, 0.88));
+      box-shadow: var(--shadow-lg);
+      color: #fff;
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background:
+        linear-gradient(150deg, var(--color-accent-lime-500), #fff37d 52%, var(--color-brand-blue-500));
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: 10px;
+      background: rgba(0, 10, 37, 0.25);
+      clip-path: polygon(0 70%, 36% 24%, 58% 50%, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .brand p,
+    .topbar-meta,
+    .muted {
+      color: rgba(255, 255, 255, 0.72);
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill,
+    .ghost-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .pill .dot,
+    .coverage-level .dot,
+    .question-chip .dot,
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      flex: 0 0 auto;
+    }
+
+    .ghost-pill {
+      color: var(--color-brand-navy-900);
+      background: rgba(222, 255, 77, 0.88);
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+    }
+
+    .primary-button,
+    .secondary-button,
+    .tertiary-button {
+      border: 0;
+      font: inherit;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .primary-button:hover,
+    .secondary-button:hover,
+    .tertiary-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .primary-button {
+      padding: 12px 18px;
+      background: var(--color-brand-blue-500);
+      color: #fff;
+      border-radius: 14px;
+      box-shadow: 0 10px 20px rgba(12, 98, 251, 0.24);
+      font-weight: 700;
+    }
+
+    .secondary-button {
+      padding: 12px 18px;
+      background: #fff;
+      color: var(--color-brand-navy-900);
+      border-radius: 14px;
+      box-shadow: inset 0 0 0 1px rgba(0, 10, 37, 0.1);
+      font-weight: 600;
+    }
+
+    .tertiary-button {
+      padding: 10px 0;
+      color: var(--color-brand-blue-600);
+      background: transparent;
+      font-weight: 600;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+      gap: 28px;
+      margin-top: 24px;
+      align-items: stretch;
+    }
+
+    .hero-panel {
+      position: relative;
+      overflow: hidden;
+      padding: 34px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      right: -58px;
+      top: -58px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(27, 225, 242, 0.42), rgba(199, 185, 255, 0.06) 58%, transparent 72%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(12, 98, 251, 0.08);
+      color: var(--color-brand-blue-600);
+      font-size: 0.83rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .eyebrow .status-dot {
+      background: var(--color-accent-cyan-500);
+      box-shadow: 0 0 0 6px rgba(27, 225, 242, 0.12);
+    }
+
+    .hero h2 {
+      max-width: 12ch;
+      margin: 18px 0 14px;
+      font-size: clamp(2.6rem, 4vw, 4.25rem);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+      color: var(--color-brand-navy-900);
+    }
+
+    .hero h2 span {
+      color: var(--color-brand-blue-500);
+    }
+
+    .hero-copy {
+      max-width: 58ch;
+      font-size: 1.06rem;
+      line-height: 1.7;
+      color: var(--color-text-muted);
+      margin: 0 0 24px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .stat-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(245, 245, 245, 0.94));
+      box-shadow: inset 0 0 0 1px rgba(0, 10, 37, 0.07);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 1.4rem;
+      line-height: 1.1;
+      color: var(--color-brand-navy-900);
+    }
+
+    .stat-card span {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--color-text-muted);
+    }
+
+    .hero-side {
+      background: linear-gradient(180deg, rgba(0, 10, 37, 0.96), rgba(15, 28, 65, 0.92));
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-side::before {
+      background: radial-gradient(circle, rgba(222, 255, 77, 0.18), rgba(12, 98, 251, 0.04) 58%, transparent 72%);
+    }
+
+    .hero-side h3 {
+      margin: 16px 0 10px;
+      font-size: 1.7rem;
+      line-height: 1.15;
+    }
+
+    .hero-side p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.65;
+    }
+
+    .coverage-rings {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .ring-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .ring-card strong {
+      display: block;
+      font-size: 1.2rem;
+    }
+
+    .ring-card span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .ring-card.highlight {
+      background: linear-gradient(180deg, rgba(222, 255, 77, 0.12), rgba(27, 225, 242, 0.08));
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.7fr);
+      gap: 28px;
+      margin-top: 28px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 26px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(10px);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 1.45rem;
+      line-height: 1.15;
+      color: var(--color-brand-navy-900);
+    }
+
+    .panel-subtitle {
+      margin: 8px 0 0;
+      max-width: 58ch;
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    .stage-toggle {
+      display: inline-flex;
+      gap: 8px;
+      padding: 6px;
+      border-radius: 999px;
+      background: rgba(0, 10, 37, 0.05);
+    }
+
+    .stage-toggle span {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+    }
+
+    .stage-toggle .active {
+      background: #fff;
+      color: var(--color-brand-navy-900);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .editor {
+      position: relative;
+      min-height: 420px;
+      padding: 28px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+      border: 1px solid rgba(0, 47, 175, 0.1);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.72);
+      overflow: hidden;
+    }
+
+    .editor::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--color-accent-lime-500), var(--color-accent-cyan-500), var(--color-brand-blue-500));
+    }
+
+    .editor-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+      color: var(--color-text-muted);
+      font-size: 0.88rem;
+    }
+
+    .editor-copy {
+      margin: 0;
+      max-width: 70ch;
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--color-text-primary);
+    }
+
+    .editor-copy strong {
+      color: var(--color-brand-navy-900);
+    }
+
+    .editor-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(0, 10, 37, 0.08);
+    }
+
+    .helper-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .helper-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(12, 98, 251, 0.08);
+      color: var(--color-brand-blue-600);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .rail {
+      display: grid;
+      gap: 18px;
+    }
+
+    .rail-card {
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.86);
+      box-shadow: var(--shadow-md);
+    }
+
+    .rail-card h4 {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+      color: var(--color-brand-navy-900);
+    }
+
+    .rail-card p {
+      margin: 0;
+      font-size: 0.93rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    .coverage-list,
+    .question-list,
+    .output-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .coverage-item,
+    .question-item,
+    .output-item {
+      padding: 16px;
+      border-radius: 18px;
+      background: var(--color-surface-muted);
+      border: 1px solid rgba(0, 10, 37, 0.05);
+    }
+
+    .coverage-item header,
+    .question-item header,
+    .output-item header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .coverage-item strong,
+    .question-item strong,
+    .output-item strong {
+      font-size: 0.98rem;
+      color: var(--color-brand-navy-900);
+    }
+
+    .coverage-level,
+    .question-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .coverage-level.strong {
+      background: rgba(222, 255, 77, 0.34);
+      color: #2d3d00;
+    }
+
+    .coverage-level.partial {
+      background: rgba(27, 225, 242, 0.2);
+      color: #005d6a;
+    }
+
+    .coverage-level.weak,
+    .question-chip {
+      background: rgba(255, 77, 95, 0.12);
+      color: #8a1624;
+    }
+
+    .coverage-level.strong .dot {
+      background: var(--color-accent-lime-600);
+    }
+
+    .coverage-level.partial .dot {
+      background: var(--color-accent-cyan-500);
+    }
+
+    .coverage-level.weak .dot,
+    .question-chip .dot {
+      background: var(--color-accent-coral-500);
+    }
+
+    .question-item textarea {
+      width: 100%;
+      min-height: 86px;
+      margin-top: 12px;
+      padding: 14px 16px;
+      border: 1px solid rgba(0, 47, 175, 0.12);
+      border-radius: 16px;
+      resize: none;
+      font: inherit;
+      line-height: 1.6;
+      color: var(--color-text-primary);
+      background: #fff;
+    }
+
+    .question-item textarea::placeholder {
+      color: #919191;
+    }
+
+    .question-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .output-card {
+      background: linear-gradient(180deg, rgba(0, 10, 37, 0.96), rgba(0, 47, 175, 0.9));
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .output-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -28px -28px auto;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(222, 255, 77, 0.2), transparent 68%);
+    }
+
+    .output-card h4,
+    .output-card strong {
+      color: #fff;
+    }
+
+    .output-card p,
+    .output-card li,
+    .output-card .muted {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .output-list .output-item {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .output-item p {
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      padding: 18px 22px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.86);
+      box-shadow: var(--shadow-sm);
+      color: var(--color-text-muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1200px) {
+      .hero,
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .shell {
+        padding: 16px;
+      }
+
+      .topbar,
+      .hero-panel,
+      .panel,
+      .rail-card {
+        border-radius: 22px;
+      }
+
+      .topbar,
+      .panel-header,
+      .editor-footer,
+      .question-actions {
+        align-items: stretch;
+      }
+
+      .topbar,
+      .panel-header {
+        flex-direction: column;
+      }
+
+      .hero h2 {
+        max-width: 100%;
+        font-size: clamp(2.4rem, 10vw, 3.4rem);
+      }
+
+      .hero-stats,
+      .coverage-rings {
+        grid-template-columns: 1fr;
+      }
+
+      .stage-toggle {
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div>
+          <h1>Employee Self-Evaluation Studio</h1>
+          <p>Q2 2026 review cycle · Senior Principal, Client Delivery</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <span class="pill"><span class="dot" style="background:#1be1f2"></span>Auto-saved 12 seconds ago</span>
+        <span class="pill"><span class="dot" style="background:#deff4d"></span>Coverage improving</span>
+        <button class="secondary-button">Save draft</button>
+        <button class="primary-button">Generate refined narrative</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-panel hero">
+        <div>
+          <div class="eyebrow"><span class="status-dot"></span>Evidence-first writing workspace</div>
+          <h2>Write your quarter. <span>Then sharpen the story.</span></h2>
+          <p class="hero-copy">This mockup translates the design system into a product workspace that feels like a structured writing studio: generous drafting space, visible pillar coverage, and coaching prompts that help the user strengthen weak sections without turning the experience into an HR form.</p>
+          <div class="hero-stats">
+            <div class="stat-card">
+              <strong>4 pillars</strong>
+              <span>Delivery, Expertise, Slalom growth, and leadership are mapped from one free-form draft.</span>
+            </div>
+            <div class="stat-card">
+              <strong>2 prompts</strong>
+              <span>Only the weakest areas surface, so follow-up feels precise rather than overwhelming.</span>
+            </div>
+            <div class="stat-card">
+              <strong>1 final narrative</strong>
+              <span>Copy-ready output stays editable and organized by pillar for submission.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-panel hero-side">
+        <div>
+          <span class="ghost-pill">Design direction in practice</span>
+          <h3>Modern, bright, and editorial.</h3>
+          <p>The page keeps the writing canvas central, uses deep navy for framing, and introduces Slalom-inspired energy through lime, cyan, and electric blue instead of default AI purple.</p>
+        </div>
+        <div class="coverage-rings">
+          <div class="ring-card highlight">
+            <strong>Strong</strong>
+            <span>Delivery Exceptionally is well supported with outcomes and client impact.</span>
+          </div>
+          <div class="ring-card">
+            <strong>Refine</strong>
+            <span>Lead needs one clearer example of direction-setting and coaching.</span>
+          </div>
+          <div class="ring-card">
+            <strong>Progress</strong>
+            <span>Auto-save and visible status make the draft feel dependable.</span>
+          </div>
+          <div class="ring-card">
+            <strong>Output</strong>
+            <span>The final narrative remains editable before the user copies it out.</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="workspace">
+      <main class="panel">
+        <div class="panel-header">
+          <div>
+            <h3 class="panel-title">Draft workspace</h3>
+            <p class="panel-subtitle">Start with accomplishments, outcomes, growth, and moments where you created clarity or momentum. The writing surface stays calm while the right rail carries structure and coaching.</p>
+          </div>
+          <div class="stage-toggle" aria-label="Review stages">
+            <span class="active">Draft</span>
+            <span>Analyze</span>
+            <span>Refine</span>
+          </div>
+        </div>
+
+        <div class="editor">
+          <div class="editor-toolbar">
+            <span>Guided prompt: Start with what you accomplished this quarter. Include outcomes, impact, and moments where you led, learned, or created value.</span>
+            <span>1,284 words</span>
+          </div>
+          <p class="editor-copy"><strong>This quarter I led a recovery effort across two client workstreams after scope pressure and staffing changes began affecting delivery confidence.</strong> I reset the operating cadence, aligned leadership on tradeoffs, and introduced a lighter decision framework that improved escalation quality and gave the team clearer ownership. I also coached delivery leads on how to present risk in a way that preserved trust while making next-step decisions easier for the client.</p>
+          <p class="editor-copy">Beyond project execution, I contributed to proposal shaping for a follow-on expansion, translating delivery learnings into a stronger pursuit narrative. Internally, I mentored newer leaders on delivery management and helped connect examples from our work into reusable knowledge for the broader capability. I want the final narrative to better reflect how I influenced others and how I helped grow Slalom beyond my immediate delivery scope.</p>
+          <div class="editor-footer">
+            <div class="helper-row">
+              <span class="helper-tag">Delivery management</span>
+              <span class="helper-tag">Client influence</span>
+              <span class="helper-tag">Knowledge sharing</span>
+            </div>
+            <button class="tertiary-button">See pillar mapping</button>
+          </div>
+        </div>
+
+        <div class="footer-note">This mockup centers the most important V1 behavior: users draft freely first, then see structure, gaps, and refinement options without losing control of their own narrative.</div>
+      </main>
+
+      <aside class="rail">
+        <section class="rail-card">
+          <h4>Pillar coverage</h4>
+          <p>Your draft strongly supports Delivery Exceptionally. Lead and Grow Slalom could use more evidence before the narrative feels complete.</p>
+          <div class="coverage-list">
+            <article class="coverage-item">
+              <header>
+                <strong>Delivery Exceptionally</strong>
+                <span class="coverage-level strong"><span class="dot"></span>Strong</span>
+              </header>
+              <p>Clear examples of delivery recovery, risk framing, and client decision support are already present.</p>
+            </article>
+            <article class="coverage-item">
+              <header>
+                <strong>Grow Expertise</strong>
+                <span class="coverage-level partial"><span class="dot"></span>Partial</span>
+              </header>
+              <p>Mentoring and knowledge-sharing are visible, but one stronger example of capability development would help.</p>
+            </article>
+            <article class="coverage-item">
+              <header>
+                <strong>Grow Slalom</strong>
+                <span class="coverage-level weak"><span class="dot"></span>Weak</span>
+              </header>
+              <p>Proposal shaping is promising, but the commercial or strategic outcome is not yet explicit.</p>
+            </article>
+            <article class="coverage-item">
+              <header>
+                <strong>Lead</strong>
+                <span class="coverage-level weak"><span class="dot"></span>Weak</span>
+              </header>
+              <p>Coaching is mentioned, but the draft needs one specific example of guiding others through change or setting direction.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="rail-card">
+          <h4>Targeted follow-up prompts</h4>
+          <p>These are soft prompts, not blockers. They help the user deepen only the thin areas.</p>
+          <div class="question-list">
+            <article class="question-item">
+              <header>
+                <strong>How did you help shape direction or coach others through ambiguity?</strong>
+                <span class="question-chip"><span class="dot"></span>Lead</span>
+              </header>
+              <p>Add one concrete moment where your guidance changed team behavior, improved accountability, or reduced uncertainty.</p>
+              <textarea placeholder="I created a short decision memo and used it with delivery leads each week to clarify tradeoffs, coach escalation quality, and keep the team aligned on who owned each next action."></textarea>
+              <div class="question-actions">
+                <span class="muted">Inline answer keeps the workflow moving.</span>
+                <button class="secondary-button">Add to draft</button>
+              </div>
+            </article>
+            <article class="question-item">
+              <header>
+                <strong>What value did your proposal shaping or network-building create for Slalom?</strong>
+                <span class="question-chip"><span class="dot"></span>Grow Slalom</span>
+              </header>
+              <p>Focus on how you expanded opportunity, improved positioning, or helped the team carry delivery insight into future work.</p>
+              <textarea placeholder="I translated delivery lessons into proposal language that improved clarity on staffing approach and de-risked the transition into the follow-on phase."></textarea>
+              <div class="question-actions">
+                <span class="muted">Questions should feel like coaching, not correction.</span>
+                <button class="secondary-button">Use in refinement</button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="rail-card output-card">
+          <h4>Refined narrative preview</h4>
+          <p>This card shows how the final state can feel polished and presentation-ready without hiding that the content remains editable.</p>
+          <div class="output-list">
+            <article class="output-item">
+              <header>
+                <strong>Delivery Exceptionally</strong>
+                <span class="pill">Ready</span>
+              </header>
+              <p>I stabilized two complex client workstreams by resetting delivery rhythm, clarifying ownership, and helping leaders make faster, better tradeoff decisions with greater confidence.</p>
+            </article>
+            <article class="output-item">
+              <header>
+                <strong>Lead</strong>
+                <span class="pill">Needs one edit</span>
+              </header>
+              <p>I coached delivery leads through ambiguity by giving them a clearer structure for escalation, decision-making, and team accountability during a period of change.</p>
+            </article>
+          </div>
+          <div class="question-actions" style="margin-top:18px">
+            <button class="secondary-button">Edit narrative</button>
+            <button class="primary-button">Copy final text</button>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </div>
+</body>
+</html>
